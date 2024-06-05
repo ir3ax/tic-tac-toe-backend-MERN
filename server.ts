@@ -2,16 +2,18 @@
     import mongoose from 'mongoose';
     import cors from 'cors'
     import router from './routes/router';
+    import dotenv from 'dotenv';
+    dotenv.config();
 
     const app = express();
     app.use(cors());
     app.use(express.json());
     app.use('/games', router);
 
-    mongoose.connect('mongodb+srv://itmarklimuelfernando:yXgQ8CHOeU0F2QDM@cluster0.z4spdh3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+    mongoose.connect(`${process.env.REACT_APP_MONGODB}`)
     .then(() => {
         console.log('Database connected successfully');
-        const port = process.env.PORT || 5000;
+        const port = process.env.REACT_APP_PORT || 5000;
         app.listen(port, () => {
             console.log(`Server running on port ${port}`);
         });
